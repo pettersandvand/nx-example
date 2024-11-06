@@ -1,0 +1,17 @@
+{
+  "name": "weather",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/weather/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project weather --web",
+  "targets": {
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "openapi --input libs/generated/api-swagger.json --output apps/weather/src/client --name API"
+      }
+    }
+  },
+  "implicitDependencies": ["my-api"]
+}
