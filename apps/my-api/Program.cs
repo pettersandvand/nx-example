@@ -43,10 +43,45 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+app.MapGet("/weatherforeca3st2", () =>
+{
+    List<int> primes = new List<int>();
+    var n = 100000;
+    primes.Add(2);
+    int nextPrime = 3;
+    while (primes.Count < n)
+    {
+        int sqrt = (int)Math.Sqrt(nextPrime);
+        bool isPrime = true;
+        for (int i = 0; (int)primes[i] <= sqrt; i++)
+        {
+            if (nextPrime % primes[i] == 0)
+            {
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime)
+        {
+            primes.Add(nextPrime);
+        }
+        nextPrime += 2;
+    }
+    return primes;
+
+})
+.WithName("GetWeatherForecast2")
+.WithOpenApi();
+
 app.UseCors(MyAllowSpecificOrigins);
 
 
 app.Run();
+
+record weatherforecast2(string summaries){
+  public string summaries;
+}
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
