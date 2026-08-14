@@ -27,6 +27,29 @@
           }
         }
       }
+    },
+    "/weatherforeca3st2": {
+      "get": {
+        "tags": [
+          "NxExample.MyApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+        ],
+        "operationId": "GetWeatherForecast2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/weatherforecast2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -52,6 +75,10 @@
             "readOnly": true
           }
         },
+        "additionalProperties": false
+      },
+      "weatherforecast2": {
+        "type": "object",
         "additionalProperties": false
       }
     }

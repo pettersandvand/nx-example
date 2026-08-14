@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { api } from "../main";
 import { WeatherForecast } from "../client";
 import WeatherCard from "../components/weatherCard";
+import { api } from "./app";
 
 export default function Weather() {
   const [data, setData]= useState<WeatherForecast[] | undefined>();

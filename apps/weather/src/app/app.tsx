@@ -1,4 +1,10 @@
+import { API } from '../client';
 import Weather from './weather';
+
+export const api = new API({
+  BASE: 'http://localhost:5115',
+}).nxExampleMyApiVersion1000CultureNeutralPublicKeyTokenNull
+// Create a client
 
 export function App() {
   return (

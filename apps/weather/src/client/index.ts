@@ -11,5 +11,6 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { WeatherForecast } from './models/WeatherForecast';
+export type { weatherforecast2 } from './models/weatherforecast2';
 
 export { NxExampleMyApiVersion1000CultureNeutralPublicKeyTokenNullService } from './services/NxExampleMyApiVersion1000CultureNeutralPublicKeyTokenNullService';
