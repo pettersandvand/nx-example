@@ -2,9 +2,6 @@
   "name": "@nx-example/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {
-    "prepare": "nx g @nx-dotnet/core:restore"
-  },
   "private": true,
   "dependencies": {
     "react": "19.2.8",
