@@ -1,13 +1,19 @@
 // Expose Node.js native fetch globals into the jsdom global scope.
 // jest-environment-jsdom does not automatically forward Node 18+ globals.
-// `fetch` is available as a global in Jest 30 / Node 22, but Headers/Request/Response
-// need to be polyfilled from the built-in undici module (node:undici, Node 18+).
+// In Node 18+, fetch/Headers/Request/Response are available on globalThis.
+// We must not use `node:undici` directly as Jest's module resolver does not support the `node:` prefix.
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const undici = require('node:undici') as any;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const g = global as any;
-g.Headers = g.Headers ?? undici.Headers;
-g.Request = g.Request ?? undici.Request;
-g.Response = g.Response ?? undici.Response;
+if (typeof g.fetch === 'undefined') {
+  g.fetch = (globalThis as any).fetch;
+}
+if (typeof g.Headers === 'undefined') {
+  g.Headers = (globalThis as any).Headers;
+}
+if (typeof g.Request === 'undefined') {
+  g.Request = (globalThis as any).Request;
+}
+if (typeof g.Response === 'undefined') {
+  g.Response = (globalThis as any).Response;
+}
