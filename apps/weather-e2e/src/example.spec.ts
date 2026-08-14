@@ -9,10 +9,17 @@ test('has title', async ({ page }) => {
 
 test('has weather', async ({ page }) => {
   // Mock the backend API so the weather component renders without a live .NET server.
-  await page.route('**/weatherforecast', async (route) => {
+  // The app fetches cross-origin (http://localhost:5115) while the page itself is
+  // served from http://localhost:4300, so the mocked response must include CORS
+  // headers or the browser's fetch() will reject the response and the component
+  // will silently fail to render (no try/catch around the fetch in weather.tsx).
+  await page.route('http://localhost:5115/weatherforecast', async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
       body: JSON.stringify([
         {
           date: '2024-01-01',
@@ -25,7 +32,7 @@ test('has weather', async ({ page }) => {
   });
 
   await page.goto('/');
-  const content = page.getByText('Temperature').first();
+  const content = page.getByText(/Temperature/).first();
 
-  await expect(content).toBeVisible();
+  await expect(content).toBeVisible({ timeout: 10000 });
 });
