@@ -31,8 +31,10 @@ test('has weather', async ({ page }) => {
     });
   });
 
+  // Start waiting for the mocked API response before navigating so we don't miss it.
+  const responsePromise = page.waitForResponse('**/weatherforecast');
   await page.goto('/');
-  const content = page.getByText(/Temperature/).first();
+  await responsePromise;
 
-  await expect(content).toBeVisible({ timeout: 10000 });
+  await expect(page.getByText(/Temperature/).first()).toBeVisible({ timeout: 10000 });
 });
