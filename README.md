@@ -1,82 +1,138 @@
-# NxExample
+# nx-example
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A full-stack monorepo example built with [Nx](https://nx.dev), featuring a React weather frontend and a .NET backend API — wired together with OpenAPI code generation.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## What's in this repo
 
-## Finish your CI setup
+| Project | Type | Stack | Description |
+|---|---|---|---|
+| `weather` | App | React 19 + Vite + Tailwind | Weather frontend |
+| `weather-e2e` | E2E tests | Playwright | End-to-end tests for the weather app |
+| `my-api` | App | .NET (C#) | Backend REST API |
+| `my-api-test` | Tests | .NET | API integration tests |
+| `libs/generated` | Library | TypeScript | Auto-generated API client from OpenAPI spec |
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/MgSIWzoiB2)
+---
 
+## Prerequisites
 
-## Run tasks
+- [Node.js](https://nodejs.org/) v20+
+- [pnpm](https://pnpm.io/) v9+
+- [.NET SDK](https://dotnet.microsoft.com/) 8+
 
-To run the dev server for your app, use:
+---
 
-```sh
-npx nx serve weather
-```
-
-To create a production bundle:
-
-```sh
-npx nx build weather
-```
-
-To see all available targets to run for a project, run:
-
-```sh
-npx nx show project weather
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
+## Getting started
 
 ```sh
-npx nx g @nx/react:app demo
+# Install dependencies
+pnpm install
 ```
 
-To generate a new library, use:
+---
+
+## Running projects
+
+### Frontend (weather app)
 
 ```sh
-npx nx g @nx/react:lib mylib
+# Start dev server
+pnpm nx serve weather
+
+# Build for production
+pnpm nx build weather
+
+# Run unit tests
+pnpm nx test weather
+
+# Run E2E tests
+pnpm nx e2e weather-e2e
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+### Backend (.NET API)
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```sh
+# Start the API
+pnpm nx serve my-api
 
+# Build
+pnpm nx build my-api
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Regenerate the API client
 
-## Install Nx Console
+The TypeScript client in `libs/generated` is auto-generated from the OpenAPI spec produced by `my-api`.
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+```sh
+# 1. Regenerate the swagger spec from the running API
+pnpm nx swagger my-api
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+# 2. Generate the TypeScript client
+pnpm nx codegen generated
+```
+
+---
+
+## Running all tasks
+
+```sh
+# Lint everything
+pnpm nx run-many -t lint
+
+# Test everything
+pnpm nx run-many -t test
+
+# Build everything
+pnpm nx run-many -t build
+```
+
+---
+
+## Visualise the project graph
+
+```sh
+pnpm nx graph
+```
+
+---
+
+## Project structure
+
+```
+nx-example/
+├── apps/
+│   ├── weather/          # React frontend
+│   ├── weather-e2e/      # Playwright E2E tests
+│   ├── my-api/           # .NET backend
+│   └── my-api-test/      # .NET API tests
+├── libs/
+│   └── generated/        # Auto-generated OpenAPI TypeScript client
+├── nx.json               # Nx workspace configuration
+├── tsconfig.base.json    # Shared TypeScript config
+└── package.json
+```
+
+---
+
+## Tech stack
+
+- **[Nx 23](https://nx.dev)** — monorepo tooling, task orchestration, caching
+- **[React 19](https://react.dev)** — UI framework
+- **[Vite](https://vitejs.dev)** — frontend bundler
+- **[Tailwind CSS v4](https://tailwindcss.com)** — utility-first styling
+- **[.NET 8](https://dotnet.microsoft.com)** — backend API
+- **[OpenAPI Generator](https://openapi-generator.tech)** — TypeScript client generation
+- **[Vitest](https://vitest.dev)** — unit testing
+- **[Playwright](https://playwright.dev)** — E2E testing
+- **[ESLint](https://eslint.org)** — linting
+
+---
 
 ## Useful links
 
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Nx docs](https://nx.dev/getting-started/intro)
+- [Nx React tutorial](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial)
+- [Nx on CI](https://nx.dev/ci/intro/ci-with-nx)
+- [nx-dotnet plugin](https://nx-dotnet.com)
