@@ -64,5 +64,15 @@
     "vite": "^8.2.1",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nx-dotnet/core",
+      "@openapitools/openapi-generator-cli",
+      "@parcel/watcher",
+      "@swc/core",
+      "nx",
+      "unrs-resolver"
+    ]
   }
 }
